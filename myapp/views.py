@@ -237,19 +237,25 @@ def add_course_type_view(request):
 
 def edit_course_type_view(request, type_id):
     # 获取要编辑的课程类型对象
-    course_type = CourseType.objects.get(pk=type_id)
+    course_type = get_object_or_404(CourseType, pk=type_id)
 
     if request.method == 'POST':
         # 处理表单提交
-        form = CourseTypeForm(request.POST, instance=course_type)
+        form = CourseTypeForm(request.POST)
         if form.is_valid():
-            form.save()
+            # 手动更新表单关联的模型实例
+            course_type.type_name = form.cleaned_data['type_name']
+            course_type.save()
+            print("Course type updated successfully!")  # 添加调试输出
             return redirect('page2')
+        else:
+            print("Form validation failed:", form.errors)  # 添加调试输出
     else:
         # 显示包含当前对象数据的表单
-        form = CourseTypeForm(instance=course_type)
+        form = CourseTypeForm(initial={'type_name': course_type.type_name})
 
     return render(request, 'page/edit_course_type.html', {'form': form, 'course_type': course_type})
+
 
 def delete_course_type_view(request, type_id):
     # 获取要删除的课程类型对象

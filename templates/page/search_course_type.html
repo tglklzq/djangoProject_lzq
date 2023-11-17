@@ -1,31 +1,69 @@
 {% extends 'success.html' %}
 
 {% block content %}
-  <h2>Search Results</h2>
-  <p>Showing results for: {{ query }}</p>
-  {% if course_types %}
+<style>
+    h2 {
+        color: #3498db; /* 蓝色 */
+        margin-top: 30px;
+    }
+
+    p {
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        border: 1px solid #3498db; /* 使用蓝色边框 */
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #3498db; /* 使用蓝色背景 */
+        color: white;
+    }
+
+    a {
+        color: #3498db; /* 蓝色 */
+        text-decoration: none;
+        margin-right: 10px;
+    }
+
+    a:hover {
+        color: #2980b9; /* 深蓝色 */
+    }
+</style>
+
+<h2>Search Results</h2>
+
+{% if course_types %}
     <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>类型名称</th>
-          <th>操作</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for course_type in course_types %}
-          <tr>
-            <td>{{ course_type.type_id }}</td>
-            <td>{{ course_type.type_name }}</td>
-            <td>
-              <a href="{% url 'edit_course_type' course_type.type_id %}">编辑</a>
-              <a href="{% url 'delete_course_type' course_type.type_id %}">删除</a>
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>类型名称</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course_type in course_types %}
+                <tr>
+                    <td>{{ course_type.type_id }}</td>
+                    <td>{{ course_type.type_name }}</td>
+                    <td>
+                        <a href="{% url 'edit_course_type' course_type.type_id %}">编辑</a>
+                        <a href="{% url 'delete_course_type' course_type.type_id %}">删除</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
-  {% else %}
+{% else %}
     <p>No results found for: {{ query }}</p>
-  {% endif %}
+{% endif %}
 {% endblock %}

@@ -1,14 +1,51 @@
 {% extends 'success.html' %}
 
 {% block content %}
-  <h2>编辑课程类型</h2>
+<style>
+    h2 {
+        color: #3498db; /* 蓝色 */
+        margin-top: 30px;
+    }
 
-  <form method="post" action="{% url 'edit_course_type' course_type.type_id %}">
+    form {
+        margin-top: 20px;
+    }
+
+    label {
+        font-weight: bold;
+        margin-right: 5px;
+        color: #333;
+    }
+
+    input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 12px;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #3498db; /* 蓝色 */
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    button:hover {
+        background-color: #2980b9; /* 深蓝色 */
+    }
+</style>
+
+<h2>编辑课程类型</h2>
+
+<form method="post" action="{% url 'edit_course_type' course_type.type_id %}">
     {% csrf_token %}
+    <input type="hidden" name="type_id" value="{{ course_type.type_id }}">
     <label for="type_name">新的类型名称：</label>
     <input type="text" name="type_name" value="{{ course_type.type_name }}" required>
     <button type="submit">保存</button>
-  </form>
+</form>
 
-  <a href="{% url 'page2' %}">返回</a>
 {% endblock %}

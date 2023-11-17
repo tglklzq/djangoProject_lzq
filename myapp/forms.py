@@ -38,11 +38,20 @@ class EditCourseForm(forms.ModelForm):
             instance.save()
 
         return instance
-
+#////////////////////////////////////////////////////////////
 class AddCourseTypeForm(forms.ModelForm):
     class Meta:
         model = CourseType
         fields = ['type_name']
+
+class CourseTypeForm(forms.ModelForm):
+    class Meta:
+        model = CourseType
+        fields = ['type_name', 'type_id']
+        widgets = {
+            'type_id': forms.HiddenInput(),
+        }
+
 
 class SearchCourseTypeForm(forms.Form):
     search_query = forms.CharField(label='搜索', max_length=255, required=True)
