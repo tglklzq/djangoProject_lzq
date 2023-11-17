@@ -8,6 +8,78 @@
       width: 200px; /* 设置图片宽度，根据需要调整 */
       height: auto; /* 自动计算高度，保持图片比例 */
     }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 12px;
+    }
+
+    th {
+      background-color: #f7f7f7;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .pagination a {
+      color: #3498db;
+      float: left;
+      padding: 8px 16px;
+      text-decoration: none;
+      transition: background-color .3s;
+    }
+
+    .pagination a.active {
+      background-color: #3498db;
+      color: white;
+    }
+
+    .pagination a:hover:not(.active) {
+      background-color: #f7f7f7;
+    }
+
+    h2 {
+      margin-top: 30px;
+      color: #3498db;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-right: 5px;
+      color: #333;
+    }
+
+    input, button, file {
+      margin-bottom: 10px;
+    }
+
+    button {
+      background-color: #3498db;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
   </style>
 
   <h2>课程列表</h2>
@@ -48,15 +120,14 @@
           <td>{{ course.course_point }}</td>
           <td>{{ course.course_memo }}</td>
           <td>
-  {% if course.encoded_image %}
-    <div class="course-image">
-      <img src="data:image/png;base64,{{ course.encoded_image }}" alt="课本封面">
-    </div>
-  {% else %}
-    暂无图片
-  {% endif %}
-</td>
-
+            {% if course.encoded_image %}
+              <div class="course-image">
+                <img src="data:image/png;base64,{{ course.encoded_image }}" alt="课本封面">
+              </div>
+            {% else %}
+              暂无图片
+            {% endif %}
+          </td>
           <td>
             <a href="{% url 'edit_course' course.course_no %}">编辑</a>
             <a href="{% url 'delete_course' course.course_no %}">删除</a>

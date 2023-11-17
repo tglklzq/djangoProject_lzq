@@ -3,56 +3,104 @@
 {% extends 'success.html' %}
 
 {% block content %}
-      <style>
-    .course-image img {
-      width: 200px; /* 设置图片宽度，根据需要调整 */
-      height: auto; /* 自动计算高度，保持图片比例 */
-    }
-  </style>
-  <h2>搜索结果</h2>
-  <a href="{% url 'page1' %}">返回</a>
-  {% if search_results %}
+<style>
+  .course-image img {
+    width: 200px; /* 设置图片宽度，根据需要调整 */
+    height: auto; /* 自动计算高度，保持图片比例 */
+  }
+
+  h2 {
+    color: #3498db;
+    margin-top: 20px;
+  }
+
+  a {
+    color: #3498db;
+    text-decoration: none;
+    margin-bottom: 20px;
+    display: inline-block;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 12px;
+  }
+
+  th {
+    background-color: #f7f7f7;
+  }
+
+  .course-info {
+    margin-top: 20px;
+  }
+
+  .course-info p {
+    font-size: 16px;
+    color: #333;
+  }
+
+  .no-results {
+    color: #e74c3c;
+    font-size: 18px;
+    margin-top: 20px;
+  }
+</style>
+
+<h2>搜索结果</h2>
+<a href="{% url 'page1' %}">返回</a>
+
+{% if search_results %}
+  <div class="course-info">
     <p>共找到 {{ search_results|length }} 条符合条件的记录。</p>
 
     <table>
       <thead>
         <tr>
           <th>课程编号</th>
-        <th>课程名称</th>
-        <th>课时数</th>
-        <th>课程类型</th>
-        <th>课程状态</th>
-        <th>要求</th>
-        <th>学分</th>
-        <th>备注</th>
-        <th>书本封面</th>
+          <th>课程名称</th>
+          <th>课时数</th>
+          <th>课程类型</th>
+          <th>课程状态</th>
+          <th>要求</th>
+          <th>学分</th>
+          <th>备注</th>
+          <th>书本封面</th>
         </tr>
       </thead>
       <tbody>
         {% for course in search_results %}
-          <tr><td>{{ course.course_no }}</td>
-
-          <td>{{ course.course_name }}</td>
-          <td>{{ course.course_hours }}</td>
-          <td>{{ course.type_id }}</td>
-          <td>{{ course.course_status }}</td>
-          <td>{{ course.course_reqs }}</td>
-          <td>{{ course.course_point }}</td>
-          <td>{{ course.course_memo }}</td>
-          <td>
-  {% if course.encoded_image %}
-    <div class="course-image">
-      <img src="data:image/png;base64,{{ course.encoded_image }}" alt="课本封面">
-    </div>
-  {% else %}
-    暂无图片
-  {% endif %}
-</td>
+          <tr>
+            <td>{{ course.course_no }}</td>
+            <td>{{ course.course_name }}</td>
+            <td>{{ course.course_hours }}</td>
+            <td>{{ course.type_id }}</td>
+            <td>{{ course.course_status }}</td>
+            <td>{{ course.course_reqs }}</td>
+            <td>{{ course.course_point }}</td>
+            <td>{{ course.course_memo }}</td>
+            <td>
+              {% if course.encoded_image %}
+                <div class="course-image">
+                  <img src="data:image/png;base64,{{ course.encoded_image }}" alt="课本封面">
+                </div>
+              {% else %}
+                暂无图片
+              {% endif %}
+            </td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
-  {% else %}
-    <p>抱歉，没有找到符合条件的记录。</p>
-  {% endif %}
+  </div>
+{% else %}
+  <p class="no-results">抱歉，没有找到符合条件的记录。</p>
+{% endif %}
 {% endblock %}

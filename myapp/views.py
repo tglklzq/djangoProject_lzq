@@ -156,10 +156,20 @@ def page1_view(request):
 
     return render(request, 'page/page1.html', {'courses': courses, 'add_course_form': add_course_form, 'delete_course_form': delete_course_form})
 
+from django.shortcuts import get_object_or_404, render, redirect
+from .forms import EditCourseForm  # 请在这里导入你的编辑表单
 def edit_course_view(request, course_no):
-    course = Course.objects.get(course_no=course_no)
-    # 在这里添加编辑课程的逻辑
-    return render(request, 'page/edit_course.html', {'course': course})
+    course = get_object_or_404(Course, course_no=course_no)
+
+    if request.method == 'POST':
+        edit_course_form = EditCourseForm(request.POST, request.FILES, instance=course)
+        if edit_course_form.is_valid():
+            edit_course_form.save()
+            return redirect('page1')
+    else:
+        edit_course_form = EditCourseForm(instance=course)
+
+    return render(request, 'page/edit_course.html', {'edit_course_form': edit_course_form})
 def delete_course_view(request, course_no):
     course = Course.objects.get(course_no=course_no)
     # 在这里添加删除课程的逻辑
