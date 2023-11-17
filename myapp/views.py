@@ -115,6 +115,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect
 
 
+import base64
+
 def page1_view(request):
     courses = Course.objects.all()
 
@@ -149,6 +151,12 @@ def page1_view(request):
     else:
         add_course_form = AddCourseForm()
         delete_course_form = DeleteCourseForm()
+
+    # 对每个课程的图片进行base64编码
+    for course in courses:
+        if course.course_textbook_pic:
+            encoded_image = base64.b64encode(course.course_textbook_pic).decode('utf-8')
+            course.encoded_image = encoded_image
 
     return render(request, 'page/page1.html', {'courses': courses, 'add_course_form': add_course_form, 'delete_course_form': delete_course_form})
 
@@ -196,12 +204,21 @@ def delete_course_view(request, course_no):
 #page1查询功能：
 # views.py
 
+import base64
+
 def search_courses_type(request):
     if 'search_query' in request.GET:
         search_query = request.GET['search_query']
         # 在这里执行你的搜索逻辑，例如通过模型查询数据库
         # 使用 contains 进行模糊匹配，这里以课程名称为例
         search_results = Course.objects.filter(course_name__contains=search_query)
+
+        # 对每个查询结果的图片进行base64编码
+        for result in search_results:
+            if result.course_textbook_pic:
+                encoded_image = base64.b64encode(result.course_textbook_pic).decode('utf-8')
+                result.encoded_image = encoded_image
+
         return render(request, 'page/search_results.html', {'search_results': search_results, 'search_query': search_query})
     else:
         # 如果没有搜索查询，则重定向到原始页面或执行其他操作

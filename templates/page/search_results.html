@@ -3,6 +3,12 @@
 {% extends 'success.html' %}
 
 {% block content %}
+      <style>
+    .course-image img {
+      width: 200px; /* 设置图片宽度，根据需要调整 */
+      height: auto; /* 自动计算高度，保持图片比例 */
+    }
+  </style>
   <h2>搜索结果</h2>
   <a href="{% url 'page1' %}">返回</a>
   {% if search_results %}
@@ -34,14 +40,14 @@
           <td>{{ course.course_point }}</td>
           <td>{{ course.course_memo }}</td>
           <td>
-            {% if course.course_textbook_pic %}
-              <div class="course-image">
-                <img src="{{ course.course_textbook_pic.url }}" >
-              </div>
-            {% else %}
-              暂无图片
-            {% endif %}
-          </td>
+  {% if course.encoded_image %}
+    <div class="course-image">
+      <img src="data:image/png;base64,{{ course.encoded_image }}" alt="课本封面">
+    </div>
+  {% else %}
+    暂无图片
+  {% endif %}
+</td>
           </tr>
         {% endfor %}
       </tbody>
