@@ -22,6 +22,10 @@
         <th>课时数</th>
         <th>课程类型</th>
         <th>课程状态</th>
+        <th>要求</th>
+        <th>学分</th>
+        <th>备注</th>
+        <th>书本封面</th>
         <th>操作</th>
       </tr>
     </thead>
@@ -33,6 +37,16 @@
           <td>{{ course.course_hours }}</td>
           <td>{{ course.type_id }}</td>
           <td>{{ course.course_status }}</td>
+          <td>{{ course.course_reqs }}</td>
+          <td>{{ course.course_point }}</td>
+          <td>{{ course.course_memo }}</td>
+          <td>
+            {% if course.course_textbook_pic %}
+              <img src="{{ course.course_textbook_pic.url }}" alt="课本封面">
+            {% else %}
+              暂无图片
+            {% endif %}
+          </td>
           <td>
             <a href="{% url 'edit_course' course.course_no %}">编辑</a>
             <a href="{% url 'delete_course' course.course_no %}">删除</a>
@@ -45,25 +59,52 @@
   <div class="pagination">
     <span class="step-links">
       {% if courses.has_previous %}
-        <a href="?page=1">&laquo; first</a>
-        <a href="?page={{ courses.previous_page_number }}">previous</a>
+        <a href="?page=1">&laquo; 首页</a>
+        <a href="?page={{ courses.previous_page_number }}">上一页</a>
       {% endif %}
 
       <span class="current">
-        Page {{ courses.number }} of {{ courses.paginator.num_pages }}.
+        第 {{ courses.number }} 页，共 {{ courses.paginator.num_pages }} 页.
       </span>
 
       {% if courses.has_next %}
-        <a href="?page={{ courses.next_page_number }}">next</a>
-        <a href="?page={{ courses.paginator.num_pages }}">last &raquo;</a>
+        <a href="?page={{ courses.next_page_number }}">下一页</a>
+        <a href="?page={{ courses.paginator.num_pages }}">尾页 &raquo;</a>
       {% endif %}
     </span>
   </div>
 
-  <h2>添加课程</h2>
-  <form method="post">
+<h2>添加课程</h2>
+  <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ add_course_form.as_p }}
+    <label for="id_course_no">课程编号：</label>
+    {{ add_course_form.course_no }}
+    <br>
+    <label for="id_course_name">课程名称：</label>
+    {{ add_course_form.course_name }}
+    <br>
+    <label for="id_course_hours">课时数：</label>
+    {{ add_course_form.course_hours }}
+    <br>
+    <label for="id_type_id">课程类型：</label>
+    {{ add_course_form.type_id }}
+    <br>
+    <label for="id_course_status">课程状态：</label>
+    {{ add_course_form.course_status }}
+    <br>
+    <label for="id_course_reqs">要求：</label>
+    {{ add_course_form.course_reqs }}
+    <br>
+    <label for="id_course_point">学分：</label>
+    {{ add_course_form.course_point }}
+    <br>
+    <label for="id_course_memo">备注：</label>
+    {{ add_course_form.course_memo }}
+    <br>
+    <label for="id_course_textbook_pic">书本封面：</label>
+    {{ add_course_form.course_textbook_pic }}
+    <input type="file" name="course_textbook_pic">  {# 添加文件输入框 #}
+    <br>
     <button type="submit">添加课程</button>
   </form>
 
@@ -74,4 +115,3 @@
     <button type="submit">删除课程</button>
   </form>
 {% endblock %}
-

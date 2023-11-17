@@ -152,9 +152,6 @@ def delete_course_view(request, course_no):
 #page1查询功能：
 # views.py
 
-from django.shortcuts import render
-
-
 def search_courses_type(request):
     if 'search_query' in request.GET:
         search_query = request.GET['search_query']
