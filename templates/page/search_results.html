@@ -12,20 +12,36 @@
       <thead>
         <tr>
           <th>课程编号</th>
-          <th>课程名称</th>
-          <th>课时数</th>
-          <th>课程类型</th>
-          <th>课程状态</th>
+        <th>课程名称</th>
+        <th>课时数</th>
+        <th>课程类型</th>
+        <th>课程状态</th>
+        <th>要求</th>
+        <th>学分</th>
+        <th>备注</th>
+        <th>书本封面</th>
         </tr>
       </thead>
       <tbody>
         {% for course in search_results %}
-          <tr>
-            <td>{{ course.course_no }}</td>
-            <td>{{ course.course_name }}</td>
-            <td>{{ course.course_hours }}</td>
-            <td>{{ course.type_id }}</td>
-            <td>{{ course.course_status }}</td>
+          <tr><td>{{ course.course_no }}</td>
+
+          <td>{{ course.course_name }}</td>
+          <td>{{ course.course_hours }}</td>
+          <td>{{ course.type_id }}</td>
+          <td>{{ course.course_status }}</td>
+          <td>{{ course.course_reqs }}</td>
+          <td>{{ course.course_point }}</td>
+          <td>{{ course.course_memo }}</td>
+          <td>
+            {% if course.course_textbook_pic %}
+              <div class="course-image">
+                <img src="{{ course.course_textbook_pic.url }}" >
+              </div>
+            {% else %}
+              暂无图片
+            {% endif %}
+          </td>
           </tr>
         {% endfor %}
       </tbody>

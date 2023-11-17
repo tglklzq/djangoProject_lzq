@@ -4,7 +4,8 @@ from django.urls import path
 from .views import login_view, success_view, register_view, page_view, page5_view, update_profile_view, page1_view, \
     edit_course_view, delete_course_view, page2_view, edit_course_type_view, delete_course_type_view, \
     add_course_type_view, search_course_type_view, search_courses_type
-
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     path('login/', login_view, name='login'),
     path('success/', success_view, name='success'),

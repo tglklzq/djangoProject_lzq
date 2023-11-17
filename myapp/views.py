@@ -107,6 +107,13 @@ from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .forms import AddCourseForm, DeleteCourseForm
+# views.py
+
+
+
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import render, redirect
+
 
 def page1_view(request):
     courses = Course.objects.all()
@@ -123,10 +130,15 @@ def page1_view(request):
         courses = paginator.page(paginator.num_pages)
 
     if request.method == 'POST':
-        add_course_form = AddCourseForm(request.POST)
+        add_course_form = AddCourseForm(request.POST, request.FILES)  # 注意这里加入 request.FILES
         delete_course_form = DeleteCourseForm(request.POST)
 
         if add_course_form.is_valid():
+            # 处理文件上传
+            course_textbook_pic = request.FILES.get('course_textbook_pic')
+            if course_textbook_pic:
+                # 以二进制形式读取文件数据并存储到数据库
+                add_course_form.instance.course_textbook_pic = course_textbook_pic.read()
             add_course_form.save()
             return redirect('page1')
 
@@ -139,6 +151,38 @@ def page1_view(request):
         delete_course_form = DeleteCourseForm()
 
     return render(request, 'page/page1.html', {'courses': courses, 'add_course_form': add_course_form, 'delete_course_form': delete_course_form})
+
+# def page1_view(request):
+#     courses = Course.objects.all()
+#
+#     # 添加分页功能
+#     page = request.GET.get('page', 1)
+#     paginator = Paginator(courses, 20)
+#
+#     try:
+#         courses = paginator.page(page)
+#     except PageNotAnInteger:
+#         courses = paginator.page(1)
+#     except EmptyPage:
+#         courses = paginator.page(paginator.num_pages)
+#
+#     if request.method == 'POST':
+#         add_course_form = AddCourseForm(request.POST)
+#         delete_course_form = DeleteCourseForm(request.POST)
+#
+#         if add_course_form.is_valid():
+#             add_course_form.save()
+#             return redirect('page1')
+#
+#         if delete_course_form.is_valid():
+#             course_no = delete_course_form.cleaned_data['course_no']
+#             Course.objects.filter(course_no=course_no).delete()
+#             return redirect('page1')
+#     else:
+#         add_course_form = AddCourseForm()
+#         delete_course_form = DeleteCourseForm()
+#
+#     return render(request, 'page/page1.html', {'courses': courses, 'add_course_form': add_course_form, 'delete_course_form': delete_course_form})
 def edit_course_view(request, course_no):
     course = Course.objects.get(course_no=course_no)
     # 在这里添加编辑课程的逻辑

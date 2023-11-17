@@ -3,6 +3,13 @@
 {% extends 'success.html' %}
 
 {% block content %}
+  <style>
+    .course-image img {
+      width: 200px; /* 设置图片宽度，根据需要调整 */
+      height: auto; /* 自动计算高度，保持图片比例 */
+    }
+  </style>
+
   <h2>课程列表</h2>
 
   <form method="get" action="{% url 'search_courses_type' %}">
@@ -42,7 +49,9 @@
           <td>{{ course.course_memo }}</td>
           <td>
             {% if course.course_textbook_pic %}
-              <img src="{{ course.course_textbook_pic.url }}" alt="课本封面">
+              <div class="course-image">
+                <img src="{{ course.course_textbook_pic.url }}" >
+              </div>
             {% else %}
               暂无图片
             {% endif %}
@@ -74,7 +83,7 @@
     </span>
   </div>
 
-<h2>添加课程</h2>
+  <h2>添加课程</h2>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <label for="id_course_no">课程编号：</label>
