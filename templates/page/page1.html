@@ -1,0 +1,77 @@
+<!-- templates/page/page1.html -->
+
+{% extends 'success.html' %}
+
+{% block content %}
+  <h2>课程列表</h2>
+
+  <form method="get" action="{% url 'search_courses_type' %}">
+    <label for="search_query">搜索课程：</label>
+    <input type="text" id="search_query" name="search_query" value="{{ request.GET.search_query }}">
+    <button type="submit">搜索</button>
+    {% if request.GET.search_query %}
+      <a href="{% url 'page1' %}">取消搜索</a>
+    {% endif %}
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>课程编号</th>
+        <th>课程名称</th>
+        <th>课时数</th>
+        <th>课程类型</th>
+        <th>课程状态</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for course in courses %}
+        <tr>
+          <td>{{ course.course_no }}</td>
+          <td>{{ course.course_name }}</td>
+          <td>{{ course.course_hours }}</td>
+          <td>{{ course.type_id }}</td>
+          <td>{{ course.course_status }}</td>
+          <td>
+            <a href="{% url 'edit_course' course.course_no %}">编辑</a>
+            <a href="{% url 'delete_course' course.course_no %}">删除</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <span class="step-links">
+      {% if courses.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ courses.previous_page_number }}">previous</a>
+      {% endif %}
+
+      <span class="current">
+        Page {{ courses.number }} of {{ courses.paginator.num_pages }}.
+      </span>
+
+      {% if courses.has_next %}
+        <a href="?page={{ courses.next_page_number }}">next</a>
+        <a href="?page={{ courses.paginator.num_pages }}">last &raquo;</a>
+      {% endif %}
+    </span>
+  </div>
+
+  <h2>添加课程</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ add_course_form.as_p }}
+    <button type="submit">添加课程</button>
+  </form>
+
+  <h2>删除课程</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ delete_course_form.as_p }}
+    <button type="submit">删除课程</button>
+  </form>
+{% endblock %}
+

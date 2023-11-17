@@ -1,0 +1,17 @@
+{% extends 'success.html' %}
+
+{% block content %}
+  <h2>添加课程类型</h2>
+
+  <form method="post" action="{% url 'add_course_type' %}">
+    {% csrf_token %}
+    <label for="type_id">类型ID：</label>
+    <input type="number" name="type_id" required>
+    <br>
+    <label for="type_name">类型名称：</label>
+    <input type="text" name="type_name" required>
+    <button type="submit">添加</button>
+  </form>
+
+  <a href="{% url 'page2' %}">返回</a>
+{% endblock %}

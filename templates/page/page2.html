@@ -1,0 +1,48 @@
+{% extends 'success.html' %}
+
+{% block content %}
+  <h2>课程类型</h2>
+
+  <!-- 显示课程类型 -->
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>类型名称</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for course_type in course_types %}
+        <tr>
+          <td>{{ course_type.type_id }}</td>
+          <td>{{ course_type.type_name }}</td>
+          <td>
+            <a href="{% url 'edit_course_type' course_type.type_id %}">编辑</a>
+            <a href="{% url 'delete_course_type' course_type.type_id %}">删除</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- 添加课程类型表单 -->
+  <h3>添加课程类型</h3>
+  <form method="post" action="{% url 'add_course_type' %}">
+    {% csrf_token %}
+    <label for="type_id">类型ID：</label>
+    <input type="number" name="type_id" required>
+    <br>
+    <label for="type_name">类型名称：</label>
+    <input type="text" name="type_name" required>
+    <button type="submit">添加</button>
+  </form>
+
+  <!-- 搜索课程类型表单 -->
+  <h3>搜索课程类型</h3>
+  <form method="get" action="{% url 'search_course_type' %}">
+    <label for="search_query">搜索：</label>
+    <input type="text" name="search_query" required>
+    <button type="submit">搜索</button>
+  </form>
+{% endblock %}

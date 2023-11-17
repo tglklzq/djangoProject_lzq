@@ -1,0 +1,14 @@
+{% extends 'success.html' %}
+
+{% block content %}
+  <h2>删除课程类型</h2>
+
+  <p>你确定要删除课程类型 "{{ course_type.type_name }}" 吗？</p>
+
+  <form method="post" action="{% url 'delete_course_type' course_type.type_id %}">
+    {% csrf_token %}
+    <button type="submit">确认删除</button>
+  </form>
+
+  <a href="{% url 'page2' %}">取消</a>
+{% endblock %}

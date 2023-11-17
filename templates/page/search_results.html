@@ -1,0 +1,36 @@
+<!-- templates/page/search_results.html -->
+
+{% extends 'success.html' %}
+
+{% block content %}
+  <h2>搜索结果</h2>
+  <a href="{% url 'page1' %}">返回</a>
+  {% if search_results %}
+    <p>共找到 {{ search_results|length }} 条符合条件的记录。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>课程编号</th>
+          <th>课程名称</th>
+          <th>课时数</th>
+          <th>课程类型</th>
+          <th>课程状态</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for course in search_results %}
+          <tr>
+            <td>{{ course.course_no }}</td>
+            <td>{{ course.course_name }}</td>
+            <td>{{ course.course_hours }}</td>
+            <td>{{ course.type_id }}</td>
+            <td>{{ course.course_status }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>抱歉，没有找到符合条件的记录。</p>
+  {% endif %}
+{% endblock %}

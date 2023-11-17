@@ -1,0 +1,61 @@
+<!-- templates/page/identity/page5.html -->
+
+{% extends 'success.html' %}
+
+{% block content %}
+    <div style="margin: 20px;">
+        <h1>User Profile</h1>
+
+{#        <div class="user-info">#}
+{#            <p><strong>姓名:</strong> {{ user.user_name }}</p>#}
+{#            <p><strong>账号:</strong> {{ user.user_number }}</p>#}
+{#        </div>#}
+
+        <button id="openModalBtn" style="padding: 10px; background-color: #007bff; color: #fff; border: none; cursor: pointer;">修改信息</button>
+
+        <div id="myModal" class="modal" style="display: none;">
+            <div class="modal-content" style="background-color: #fefefe; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                <span class="close" style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+                <form method="post" id="updateForm" action="{% url 'update_profile' %}">
+                    {% csrf_token %}
+                    <label for="name" style="display: block; margin-top: 10px;">姓名:</label>
+                    <input type="text" id="name" name="name" value="{{ user.user_name }}" required style="width: 100%; padding: 8px; margin-bottom: 10px; box-sizing: border-box;">
+
+                    <label for="number" style="display: block; margin-top: 10px;">账号:</label>
+                    <input type="text" id="number" name="number" value="{{ user.user_number }}" required style="width: 100%; padding: 8px; margin-bottom: 10px; box-sizing: border-box;">
+
+                    <label for="password" style="display: block; margin-top: 10px;">密码:</label>
+                    <input type="password" id="password" name="password" required style="width: 100%; padding: 8px; margin-bottom: 10px; box-sizing: border-box;">
+
+                    <button type="submit" style="background-color: #007bff; color: #fff; padding: 10px; border: none; cursor: pointer;">确认</button>
+                    <button type="button" class="cancel-btn" style="background-color: #aaa; color: #fff; padding: 10px; border: none; cursor: pointer; margin-left: 10px;">取消</button>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            var modal = document.getElementById('myModal');
+            var btn = document.getElementById("openModalBtn");
+            var span = document.getElementsByClassName("close")[0];
+            var cancelBtn = document.getElementsByClassName("cancel-btn")[0];
+
+            btn.onclick = function() {
+                modal.style.display = "block";
+            }
+
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            cancelBtn.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
+    </div>
+{% endblock %}

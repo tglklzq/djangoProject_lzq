@@ -1,0 +1,14 @@
+{% extends 'success.html' %}
+
+{% block content %}
+  <h2>编辑课程类型</h2>
+
+  <form method="post" action="{% url 'edit_course_type' course_type.type_id %}">
+    {% csrf_token %}
+    <label for="type_name">新的类型名称：</label>
+    <input type="text" name="type_name" value="{{ course_type.type_name }}" required>
+    <button type="submit">保存</button>
+  </form>
+
+  <a href="{% url 'page2' %}">返回</a>
+{% endblock %}

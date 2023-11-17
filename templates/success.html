@@ -1,0 +1,61 @@
+<!-- myapp/templates/success.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success</title>
+    <style>
+        body {
+            display: flex;
+            margin: 0; /* 重置默认的 body margin */
+        }
+        nav {
+            background-color: #333;
+            padding: 15px;
+            color: white;
+            width: 200px;
+            height: 100vh; /* 100% 视口高度 */
+            overflow-y: auto; /* 添加滚动条以适应较长的导航栏内容 */
+            box-sizing: border-box; /* 确保 padding 不会改变宽度 */
+        }
+        nav a {
+            display: block;
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            background-color: #555;
+        }
+        .content {
+            flex: 1; /* 填充剩余的宽度 */
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <nav>
+        <h2>管理系统</h2>
+        <a href="{% url 'page1'  %}">1</a>
+        <a href="{% url 'page2'  %}">2</a>
+        <a href="{% url 'page' 3 %}">3</a>
+        <a href="{% url 'page' 4 %}">4</a>
+        <a href="{% url 'page' 5 %}">5</a>
+
+    </nav>
+
+    <div class="content">
+        <!-- 主要内容放在这里 -->
+        {% block content %}{% endblock %}
+    </div>
+</div>
+
+</body>
+</html>
