@@ -11,3 +11,11 @@ python
 
 课程类型表：
 ![image](https://github.com/tglklzq/djangoProject_lzq/assets/118258978/6e658470-e255-46fb-a9a7-4010c961f757)
+
+界面：
+![img.png](img.png)
+
+管理界面：
+![img_1.png](img_1.png)
+
+![img_2.png](img_2.png)
