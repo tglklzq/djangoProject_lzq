@@ -9,76 +9,53 @@
       height: auto; /* 自动计算高度，保持图片比例 */
     }
 
-    table {
-      border-collapse: collapse;
+        table {
       width: 100%;
-      margin-top: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-collapse: collapse;
+      margin-bottom: 20px;
     }
 
     th, td {
-      border: 1px solid #dddddd;
+      border: 1px solid #3498db; /* 使用蓝色边框 */
+      padding: 8px;
       text-align: left;
-      padding: 12px;
     }
 
     th {
-      background-color: #f7f7f7;
-    }
-
-    .pagination {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-    }
-
-    .pagination a {
-      color: #3498db;
-      float: left;
-      padding: 8px 16px;
-      text-decoration: none;
-      transition: background-color .3s;
-    }
-
-    .pagination a.active {
-      background-color: #3498db;
+      background-color: #3498db; /* 使用蓝色背景 */
       color: white;
     }
 
-    .pagination a:hover:not(.active) {
-      background-color: #f7f7f7;
-    }
-
-    h2 {
-      margin-top: 30px;
-      color: #3498db;
+    h2, h3 {
+      color: #3498db; /* 使用蓝色文字 */
     }
 
     form {
-      margin-top: 20px;
+      margin-bottom: 20px;
     }
 
     label {
-      font-weight: bold;
-      margin-right: 5px;
-      color: #333;
+      display: block;
+      margin-bottom: 8px;
     }
 
-    input, button, file {
-      margin-bottom: 10px;
+    input {
+      width: 80%;
+      padding: 8px;
+      margin-bottom: 12px;
+      box-sizing: border-box;
     }
 
     button {
-      background-color: #3498db;
+      background-color: #3498db; /* 使用蓝色背景 */
       color: white;
-      padding: 10px 20px;
+      padding: 10px;
       border: none;
       cursor: pointer;
-      border-radius: 4px;
     }
 
     button:hover {
-      background-color: #2980b9;
+      background-color: #2980b9; /* 鼠标悬停时的深蓝色 */
     }
   </style>
 

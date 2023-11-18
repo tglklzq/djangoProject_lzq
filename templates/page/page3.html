@@ -3,5 +3,102 @@
 {% extends 'success.html' %}
 
 {% block content %}
-    <h1>page3</h1>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    header {
+            background-color: #2196F3;
+            color: #fff;
+            text-align: center;
+            padding: 2rem 0;
+        }
+    section {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }.intro {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }.project {
+            background-color: #fff;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    th, td {
+      border: 1px solid #3498db; /* 使用蓝色边框 */
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #3498db; /* 使用蓝色背景 */
+      color: white;
+    }
+
+    h2, h3 {
+      color: #3498db; /* 使用蓝色文字 */
+    }
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 12px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #3498db; /* 使用蓝色背景 */
+      color: white;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+    }
+
+
+    button:hover {
+      background-color: #2980b9; /* 鼠标悬停时的深蓝色 */
+    }
+  </style>
+    <title>Self Introduction</title>
+
+<body>
+    <header>
+        <h1>个人简介</h1>
+        <p>欢迎来到我的个人主页</p>
+    </header>
+    <section>
+        <div class="intro">
+            <h2>自我介绍</h2>
+            <p>无个性，不签名</p>
+        </div>
+        <div class="project">
+            <h2>项目介绍</h2>
+            <p>应付Python大作业</p>
+            <p>懒得改的几点：</p>
+            <p>1.不应该登录后进入success界面的，毕竟success.html主要用来作为导航栏，结果不小心设计成主页</p>
+            <p>2.显示个人信息时候，就是因为乱设置，导致参数传递出问题了，不想做了</p>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2023 - 11 - 18</p>
+    </footer>
+</body>
+
+
 {% endblock %}
