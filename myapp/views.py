@@ -8,7 +8,8 @@ from myapp.forms import UpdateProfileForm, DeleteCourseForm, AddCourseForm, Sear
     CourseTypeForm, SearchForm
 from myapp.model import User, Course, CourseType
 
-#登录注册界面
+
+# 登录注册界面
 def login_view(request):
     error_message = None
 
@@ -31,15 +32,13 @@ def login_view(request):
     return render(request, 'login.html', {'error_message': error_message})
 
 
-
-
 def success_view(request):
     # 登录成功后的视图
     user = request.GET.get('user')
     return render(request, 'success.html', {'user': user})
 
-# views.py
 
+# views.py
 
 
 def register_view(request):
@@ -62,15 +61,18 @@ def register_view(request):
 
     return render(request, 'register.html')
 
+
 def page_view(request, page_number):
     template_name = f'page/page{page_number}.html'
     return render(request, template_name)
+
 
 # views.py
 def page5_view(request, user_number):
     user = User.objects.get(user_number=user_number)
     print("User Information:", user.user_name, user.user_number)  # 确保打印的用户信息正确
     return render(request, 'page/page5.html', {'user': user})
+
 
 def update_profile_view(request):
     if request.method == 'POST':
@@ -102,17 +104,16 @@ def update_profile_view(request):
     return render(request, 'login.html', {'form': form})
 
 
-
-
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .forms import AddCourseForm, DeleteCourseForm
+
+
 # views.py
 
 
-
-#/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#以下是开发page1
+# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+# 以下是开发page1
 def page1_view(request):
     courses = Course.objects.all()
 
@@ -154,14 +155,16 @@ def page1_view(request):
             encoded_image = base64.b64encode(course.course_textbook_pic).decode('utf-8')
             course.encoded_image = encoded_image
 
-    return render(request, 'page/page1.html', {'courses': courses, 'add_course_form': add_course_form, 'delete_course_form': delete_course_form})
+    return render(request, 'page/page1.html',
+                  {'courses': courses, 'add_course_form': add_course_form, 'delete_course_form': delete_course_form})
+
 
 import openpyxl
 from django.http import HttpResponse
-from openpyxl import Workbook
 import io
 from openpyxl.drawing.image import Image as XLImage
-import math
+
+
 def export_to_excel(request):
     # 从数据库中获取课程数据
     all_courses = Course.objects.all()
@@ -172,7 +175,7 @@ def export_to_excel(request):
 
     # 添加表头
     sheet.append(['课程编号', '课程名称', '课时数', '课程类型', '课程状态',
-        '要求', '学分', '备注', '书本封面'])
+                  '要求', '学分', '备注', '书本封面'])
 
     # 遍历课程数据，并将其写入到Excel文件中
     for course in all_courses:
@@ -187,7 +190,6 @@ def export_to_excel(request):
             sheet.add_image(img, f'I{sheet.max_row}')  # 假设将图片插入到H列
             sheet.row_dimensions[sheet.max_row].height = img.height
 
-
     # 保存Excel文件
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename=courses.xlsx'
@@ -197,6 +199,8 @@ def export_to_excel(request):
 
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import EditCourseForm  # 请在这里导入你的编辑表单
+
+
 def edit_course_view(request, course_no):
     course = get_object_or_404(Course, course_no=course_no)
 
@@ -209,16 +213,20 @@ def edit_course_view(request, course_no):
         edit_course_form = EditCourseForm(instance=course)
 
     return render(request, 'page/edit_course.html', {'edit_course_form': edit_course_form})
+
+
 def delete_course_view(request, course_no):
     course = Course.objects.get(course_no=course_no)
     # 在这里添加删除课程的逻辑
     course.delete()
     return redirect('page1')
 
-#page1查询功能：
+
+# page1查询功能：
 # views.py
 
 import base64
+
 
 def search_courses_type(request):
     if 'search_query' in request.GET:
@@ -233,14 +241,15 @@ def search_courses_type(request):
                 encoded_image = base64.b64encode(result.course_textbook_pic).decode('utf-8')
                 result.encoded_image = encoded_image
 
-        return render(request, 'page/search_results.html', {'search_results': search_results, 'search_query': search_query})
+        return render(request, 'page/search_results.html',
+                      {'search_results': search_results, 'search_query': search_query})
     else:
         # 如果没有搜索查询，则重定向到原始页面或执行其他操作
         return render(request, 'page/page1.html', {'courses': Course.objects.all()})
 
 
 # ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#开发page2：
+# 开发page2：
 # views.py
 
 # views.py
@@ -248,6 +257,7 @@ def search_courses_type(request):
 from django.shortcuts import render, redirect
 
 from .forms import CourseTypeForm
+
 
 def page2_view(request):
     # 获取所有课程类型
@@ -273,6 +283,7 @@ def add_course_type_view(request):
         form = CourseTypeForm()
 
     return render(request, 'page/add_course_type.html', {'form': form})
+
 
 def edit_course_type_view(request, type_id):
     # 获取要编辑的课程类型对象
@@ -313,12 +324,10 @@ def search_course_type_view(request):
 
     if query:
         # 如果查询参数不为空，则尝试通过 ID 或类型名称进行查询
-        course_types = CourseType.objects.filter(type_id__icontains=query) | CourseType.objects.filter(type_name__icontains=query)
+        course_types = CourseType.objects.filter(type_id__icontains=query) | CourseType.objects.filter(
+            type_name__icontains=query)
         return render(request, 'page/search_course_type.html', {'course_types': course_types, 'query': query})
     else:
         # 如果查询参数为空，则显示所有信息
         course_types = CourseType.objects.all()
         return render(request, 'page/search_course_type.html', {'course_types': course_types, 'query': query})
-
-
-
