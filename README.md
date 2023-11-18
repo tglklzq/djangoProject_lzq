@@ -1,5 +1,5 @@
 # djangoProject_lzq
-python
+python 权志梁
 
 ![image](https://github.com/tglklzq/djangoProject_lzq/assets/118258978/687be2e0-e616-482e-a955-c62e5dd00701)
 
