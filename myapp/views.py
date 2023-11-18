@@ -156,6 +156,45 @@ def page1_view(request):
 
     return render(request, 'page/page1.html', {'courses': courses, 'add_course_form': add_course_form, 'delete_course_form': delete_course_form})
 
+import openpyxl
+from django.http import HttpResponse
+from openpyxl import Workbook
+import io
+from openpyxl.drawing.image import Image as XLImage
+import math
+def export_to_excel(request):
+    # 从数据库中获取课程数据
+    all_courses = Course.objects.all()
+
+    # 创建一个新的Excel文件
+    workbook = openpyxl.Workbook()
+    sheet = workbook.active
+
+    # 添加表头
+    sheet.append(['课程编号', '课程名称', '课时数', '课程类型', '课程状态',
+        '要求', '学分', '备注', '书本封面'])
+
+    # 遍历课程数据，并将其写入到Excel文件中
+    for course in all_courses:
+        sheet.append([course.course_no, course.course_name, course.course_hours, course.type_id,
+                      course.course_status, course.course_reqs, course.course_point, course.course_memo])
+
+        # 插入图片到Excel
+        if course.course_textbook_pic:
+            img = XLImage(io.BytesIO(course.course_textbook_pic))
+            img.width = img.width * 0.5  # 调整图片大小
+            img.height = img.height * 0.5
+            sheet.add_image(img, f'I{sheet.max_row}')  # 假设将图片插入到H列
+            sheet.row_dimensions[sheet.max_row].height = img.height
+
+
+    # 保存Excel文件
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=courses.xlsx'
+    workbook.save(response)
+    return response
+
+
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import EditCourseForm  # 请在这里导入你的编辑表单
 def edit_course_view(request, course_no):

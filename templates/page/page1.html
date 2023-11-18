@@ -154,7 +154,12 @@
       {% endif %}
     </span>
   </div>
-
+<h2>导出课程数据到Excel</h2>
+  <form method="get" action="{% url 'export_to_excel' %}">
+    <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 4px;">
+      导出到Excel
+    </button>
+  </form>
   <h2>添加课程</h2>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
