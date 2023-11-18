@@ -14,8 +14,15 @@ python
 
 界面：
 ![img.png](img.png)
-
+类型：
+![img_3.png](img_3.png)
 管理界面：
 ![img_1.png](img_1.png)
 
 ![img_2.png](img_2.png)
+
+个人信息修改：
+![img_4.png](img_4.png)
+
+导出功能：
+![img_5.png](img_5.png)
