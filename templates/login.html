@@ -81,15 +81,15 @@
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
         <h2>课程管理系统</h2>
-        <label for="user_number">User Number:</label>
+        <label for="user_number">账号:</label>
         <input type="text" id="user_number" name="user_number" required>
-        <label for="user_password">Password:</label>
+        <label for="user_password">密码:</label>
         <input type="password" id="user_password" name="user_password" required>
         {% if error_message %}
             <p>{{ error_message }}</p>
         {% endif %}
-        <button type="submit">Login</button>
-        <a class="register-link" href="{% url 'register' %}">Register</a>
+        <button type="submit">登录</button>
+        <a class="register-link" href="{% url 'register' %}">注册</a>
     </form>
 </body>
 </html>

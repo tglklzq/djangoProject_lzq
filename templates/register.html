@@ -82,17 +82,17 @@
     <form method="post" action="{% url 'register' %}">
         {% csrf_token %}
         <h2>课程管理系统 - 注册</h2>
-        <label for="user_number">User Number:</label>
+        <label for="user_number">账号:</label>
         <input type="text" id="user_number" name="user_number" required>
-        <label for="user_name">Name:</label>
+        <label for="user_name">姓名:</label>
         <input type="text" id="user_name" name="user_name" required>
-        <label for="user_password">Password:</label>
+        <label for="user_password">密码:</label>
         <input type="password" id="user_password" name="user_password" required>
-        <label for="confirm_password">Confirm Password:</label>
+        <label for="confirm_password">确认密码:</label>
         <input type="password" id="confirm_password" name="confirm_password" required>
         <p>{{ error_message }}</p>
-        <button type="submit">Register</button>
-        <a class="login-link" href="{% url 'login' %}">Login</a>
+        <button type="submit">注册</button>
+        <a class="login-link" href="{% url 'login' %}">登录</a>
     </form>
 </body>
 </html>
