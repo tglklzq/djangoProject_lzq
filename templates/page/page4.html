@@ -1,8 +1,162 @@
-<!-- myapp/templates/page1.html -->
-
 {% extends 'success.html' %}
 
 {% block content %}
-    <h1>man，hhh，what can i say？</h1>
-    <h1>男人，哈哈哈，什么罐头我可以说？</h1>
+<style>
+  .course-image img {
+    width: 200px;
+    height: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  th, td {
+    border: 1px solid #3498db;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #3498db;
+    color: white;
+  }
+
+  h2, h3 {
+    color: #3498db;
+  }
+
+  form {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  input {
+    width: 80%;
+    padding: 8px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+  }
+
+  button {
+    background-color: #3498db;
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+
+  button:hover {
+    background-color: #2980b9;
+  }
+
+  .action-buttons {
+    display: flex;
+    align-items: center;
+  }
+</style>
+
+<h3>所有记录</h3>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>教师</th>
+      <th>课程</th>
+      <th>日期</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for registration in registrations %}
+      <tr>
+        <td>{{ registration.id }}</td>
+        <td>{{ registration.teacher }}</td>
+        <td>{{ registration.course }}</td>
+        <td>{{ registration.date }}</td>
+        <td class="action-buttons">
+          <form method="post" action="{% url 'edit_registration' registration.id %}">
+            {% csrf_token %}
+            <button type="submit">编辑</button>
+          </form>
+          <form method="post" action="{% url 'delete_registration' registration.id %}">
+            {% csrf_token %}
+            <button type="submit">删除</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h3>查询记录</h3>
+<form method="get" action="{% url 'page4' %}">
+  <label for="search">查询教师或课程：</label>
+  <input type="text" name="search">
+  <button type="submit">查询</button>
+</form>
+
+{% if search_results %}
+  <h3>查询结果</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>教师</th>
+        <th>课程</th>
+        <th>日期</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for registration in search_results %}
+        <tr>
+          <td>{{ registration.id }}</td>
+          <td>{{ registration.teacher }}</td>
+          <td>{{ registration.course }}</td>
+          <td>{{ registration.date }}</td>
+          <td class="action-buttons">
+            <form method="post" action="{% url 'edit_registration' registration.id %}">
+              {% csrf_token %}
+              <button type="submit">编辑</button>
+            </form>
+            <form method="post" action="{% url 'delete_registration' registration.id %}">
+              {% csrf_token %}
+              <button type="submit">删除</button>
+            </form>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="5">没有找到匹配结果。</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+
+<h3>添加新记录</h3>
+<form method="post" action="{% url 'add_registration' %}">
+  {% csrf_token %}
+  <label for="id">ID：</label>
+  <input type="text" name="id" required>
+  <br>
+  <label for="teacher">教师：</label>
+  <input type="text" name="teacher" required>
+  <br>
+  <label for="course">课程：</label>
+  <input type="text" name="course" required>
+  <br>
+  <label for="date">日期：</label>
+  <input type="text" name="date" required>
+  <button type="submit">添加</button>
+</form>
+
 {% endblock %}

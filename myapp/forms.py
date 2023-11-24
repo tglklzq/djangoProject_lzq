@@ -1,6 +1,6 @@
 from django import forms
 
-from myapp.model import Course, CourseType
+from myapp.model import Course, CourseType, Registration
 
 
 class UpdateProfileForm(forms.Form):
@@ -62,3 +62,9 @@ class CourseTypeForm(forms.Form):
 
 class SearchForm(forms.Form):
     search_query = forms.CharField(label='搜索', max_length=100)
+
+
+class RegistrationForm(forms.ModelForm):
+    class Meta:
+        model = Registration
+        fields = ['id', 'teacher', 'course', 'date']

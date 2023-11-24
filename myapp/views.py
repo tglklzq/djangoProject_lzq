@@ -5,8 +5,8 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
 from myapp.forms import UpdateProfileForm, DeleteCourseForm, AddCourseForm, SearchCourseTypeForm, AddCourseTypeForm, \
-    CourseTypeForm, SearchForm
-from myapp.model import User, Course, CourseType
+    CourseTypeForm, SearchForm, RegistrationForm
+from myapp.model import User, Course, CourseType, Registration
 
 
 # 登录注册界面
@@ -331,3 +331,62 @@ def search_course_type_view(request):
         # 如果查询参数为空，则显示所有信息
         course_types = CourseType.objects.all()
         return render(request, 'page/search_course_type.html', {'course_types': course_types, 'query': query})
+
+
+# 以下进行开发page4.html///////////////////
+
+
+def page4_view(request):
+    registrations = Registration.objects.all()
+
+    if 'search' in request.GET:
+        search_term = request.GET['search']
+        registrations = registrations.filter(teacher__icontains=search_term) | registrations.filter(course__icontains=search_term)
+
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('page4')
+    else:
+        form = RegistrationForm()
+
+    return render(request, 'page/page4.html', {'registrations': registrations, 'form': form})
+
+def add_registration(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('page4')  # 这里的'page4'是你页面4的URL名称
+    else:
+        form = RegistrationForm()
+
+    return render(request, 'page/page4.html', {'form': form})
+
+def edit_registration_view(request, id):
+    # 获取要编辑的记录对象
+    registration = Registration.objects.get(pk=id)
+
+    if request.method == 'POST':
+        # 处理编辑记录的逻辑
+        form = RegistrationForm(request.POST, instance=registration)
+        if form.is_valid():
+            form.save()
+            return redirect('page4')
+    else:
+        form = RegistrationForm(instance=registration)
+
+    return render(request, 'edit_registration.html', {'form': form, 'registration': registration})
+
+
+def delete_registration_view(request, id):
+    # 获取要删除的记录对象
+    registration = Registration.objects.get(pk=id)
+
+    if request.method == 'POST':
+        # 处理删除记录的逻辑
+        registration.delete()
+        return redirect('page4')
+
+    return render(request, 'delete_registration.html', {'registration': registration})

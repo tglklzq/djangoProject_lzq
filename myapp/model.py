@@ -24,11 +24,26 @@ class Course(models.Model):
     class Meta:
         db_table = 'course'
 
+
 class CourseType(models.Model):
     type_id = models.IntegerField(primary_key=True)
     type_name = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return self.type_name
+
     class Meta:
         db_table = 'course_type'
+
+
+class Registration(models.Model):
+    id = models.CharField(max_length=255, primary_key=True)
+    teacher = models.CharField(max_length=255, null=True, blank=True)
+    course = models.CharField(max_length=255, null=True, blank=True)
+    date = models.CharField(max_length=255, null=True, blank=True)
+
+    class Meta:
+        db_table = 'registration'  # 指定自定义的数据库表名
+
+    def __str__(self):
+        return self.id

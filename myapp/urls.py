@@ -3,7 +3,8 @@ from django.contrib.auth.views import LoginView
 from django.urls import path
 from .views import login_view, success_view, register_view, page_view, page5_view, update_profile_view, page1_view, \
     edit_course_view, delete_course_view, page2_view, edit_course_type_view, delete_course_type_view, \
-    add_course_type_view, search_course_type_view, search_courses_type, export_to_excel
+    add_course_type_view, search_course_type_view, search_courses_type, export_to_excel, page4_view, \
+    edit_registration_view, delete_registration_view, add_registration
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
@@ -32,4 +33,10 @@ path('search_courses_type/', search_courses_type, name='search_courses_type'),
 
 path('export_to_excel/', export_to_excel, name='export_to_excel'),
 
+
+
+path('page4/', page4_view, name='page4'),
+path('add_registration/', add_registration, name='add_registration'),
+path('edit/<int:id>/', edit_registration_view, name='edit_registration'),
+    path('delete/<int:id>/', delete_registration_view, name='delete_registration'),
 ]
