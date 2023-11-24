@@ -5,10 +5,10 @@ from .views import login_view, success_view, register_view, page_view, page5_vie
     edit_course_view, delete_course_view, page2_view, edit_course_type_view, delete_course_type_view, \
     add_course_type_view, search_course_type_view, search_courses_type, export_to_excel, page4_view, \
     edit_registration_view, delete_registration_view, add_registration
-from django.conf import settings
-from django.conf.urls.static import static
+from django.shortcuts import redirect
 
 urlpatterns = [
+    path('', lambda request: redirect('login')),  # 重定向到 login 页面
     path('login/', login_view, name='login'),
     path('success/', success_view, name='success'),
     path('register/', register_view, name='register'),
