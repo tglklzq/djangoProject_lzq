@@ -61,6 +61,35 @@
     display: flex;
     align-items: center;
   }
+
+  .cancel-button {
+    display: flex;
+      align-items: center;
+      justify-content: center;
+    background-color: #e74c3c;
+    color: white;
+    padding: 6px 10px;
+    text-decoration: none;
+    margin-left: 10px;
+      height: 28px;
+      font-size: 13.3333px;
+      width: 60px;
+      text-align: center;
+  }
+  .button{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    background-color: #2980b9;
+    color: white;
+    padding: 6px 10px;
+    text-decoration: none;
+    margin-left: 10px;
+      height: 40px;
+      width: 80px;
+
+  }
+
 </style>
 
 <h3>所有记录</h3>
@@ -97,11 +126,15 @@
 </table>
 
 <h3>查询记录</h3>
-<form method="get" action="{% url 'page4' %}">
+<form method="get" action="{% url 'page4' %}" style="display:flex">
   <label for="search">查询教师或课程：</label>
   <input type="text" name="search">
-  <button type="submit">查询</button>
+  <button type="submit" class="button">查询</button>
+  {% if search_results %}
+    <a href="{% url 'page4' %}" class="cancel-button">取消</a>
+  {% endif %}
 </form>
+
 
 {% if search_results %}
   <h3>查询结果</h3>

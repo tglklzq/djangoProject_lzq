@@ -250,9 +250,7 @@ def search_courses_type(request):
 
 # ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 # 开发page2：
-# views.py
 
-# views.py
 
 from django.shortcuts import render, redirect
 
@@ -338,20 +336,20 @@ def search_course_type_view(request):
 
 def page4_view(request):
     registrations = Registration.objects.all()
+    search_results = []
 
-    if 'search' in request.GET:
-        search_term = request.GET['search']
-        registrations = registrations.filter(teacher__icontains=search_term) | registrations.filter(course__icontains=search_term)
+    if request.GET.get('search'):
+        query = request.GET.get('search')
+        search_results = Registration.objects.filter(teacher__icontains=query) | Registration.objects.filter(
+            course__icontains=query)
 
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('page4')
-    else:
-        form = RegistrationForm()
+    context = {
+        'registrations': registrations,
+        'search_results': search_results
+    }
 
-    return render(request, 'page/page4.html', {'registrations': registrations, 'form': form})
+    return render(request, 'page/page4.html', context)
+
 
 def add_registration(request):
     if request.method == 'POST':
@@ -363,6 +361,7 @@ def add_registration(request):
         form = RegistrationForm()
 
     return render(request, 'page/page4.html', {'form': form})
+
 
 def edit_registration_view(request, id):
     # 获取要编辑的记录对象
@@ -377,7 +376,7 @@ def edit_registration_view(request, id):
     else:
         form = RegistrationForm(instance=registration)
 
-    return render(request, 'edit_registration.html', {'form': form, 'registration': registration})
+    return render(request, 'page/edit_registration.html', {'form': form, 'registration': registration})
 
 
 def delete_registration_view(request, id):
@@ -389,4 +388,4 @@ def delete_registration_view(request, id):
         registration.delete()
         return redirect('page4')
 
-    return render(request, 'delete_registration.html', {'registration': registration})
+    return render(request, 'page/delete_registration.html', {'registration': registration})
