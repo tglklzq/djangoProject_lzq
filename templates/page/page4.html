@@ -89,9 +89,20 @@
       width: 80px;
 
   }
+  section {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }.intro {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
 
 </style>
-
+<section>
+<div class="intro">
 <h3>所有记录</h3>
 <table>
   <thead>
@@ -124,7 +135,11 @@
     {% endfor %}
   </tbody>
 </table>
+</div>
+</section>
 
+    <section>
+<div class="intro">
 <h3>查询记录</h3>
 <form method="get" action="{% url 'page4' %}" style="display:flex">
   <label for="search">查询教师或课程：</label>
@@ -174,7 +189,11 @@
     </tbody>
   </table>
 {% endif %}
+</div>
+    </section>
 
+<section>
+<div class="intro">
 <h3>添加新记录</h3>
 <form method="post" action="{% url 'add_registration' %}">
   {% csrf_token %}
@@ -191,5 +210,6 @@
   <input type="text" name="date" required>
   <button type="submit">添加</button>
 </form>
-
+</div>
+</section>
 {% endblock %}

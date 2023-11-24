@@ -52,8 +52,19 @@
     button:hover {
       background-color: #2980b9; /* 鼠标悬停时的深蓝色 */
     }
+    section {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }.intro {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
   </style>
-
+<section>
+<div class="intro">
   <h2>课程类型</h2>
 
   <!-- 显示课程类型 -->
@@ -78,7 +89,23 @@
       {% endfor %}
     </tbody>
   </table>
+</div>
+</section>
 
+  <!-- 搜索课程类型表单 -->
+    <section>
+<div class="intro">
+  <h3>搜索课程类型</h3>
+  <form method="get" action="{% url 'search_course_type' %}">
+    <label for="search_query">搜索：</label>
+    <input type="text" name="search_query" required>
+    <button type="submit">搜索</button>
+  </form>
+</div>
+    </section>
+
+ <section>
+<div class="intro">
   <!-- 添加课程类型表单 -->
   <h3>添加课程类型</h3>
   <form method="post" action="{% url 'add_course_type' %}">
@@ -90,12 +117,8 @@
     <input type="text" name="type_name" required>
     <button type="submit">添加</button>
   </form>
+</div>
+ </section>
 
-  <!-- 搜索课程类型表单 -->
-  <h3>搜索课程类型</h3>
-  <form method="get" action="{% url 'search_course_type' %}">
-    <label for="search_query">搜索：</label>
-    <input type="text" name="search_query" required>
-    <button type="submit">搜索</button>
-  </form>
+
 {% endblock %}

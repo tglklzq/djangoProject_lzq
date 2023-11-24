@@ -40,7 +40,7 @@
     }
 
     input {
-      width: 80%;
+      width: 40%;
       padding: 8px;
       margin-bottom: 12px;
       box-sizing: border-box;
@@ -57,8 +57,43 @@
     button:hover {
       background-color: #2980b9; /* 鼠标悬停时的深蓝色 */
     }
-  </style>
 
+   section {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }.intro {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }.project {
+            background-color: #fff;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    .form-row-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.form-row {
+  flex-basis: 50%;
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+input[type="text"],
+input[type="file"] {
+  width: 146px;
+  margin-right: 20px;
+}
+
+  </style>
+<section>
+<div class="intro">
   <h2>课程列表</h2>
 
   <form method="get" action="{% url 'search_courses_type' %}">
@@ -131,50 +166,77 @@
       {% endif %}
     </span>
   </div>
+</div>
+ </section>
+<section>
+<div class="intro">
 <h2>导出课程数据到Excel</h2>
   <form method="get" action="{% url 'export_to_excel' %}">
     <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 4px;">
       导出到Excel
     </button>
   </form>
-  <h2>添加课程</h2>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <label for="id_course_no">课程编号：</label>
-    {{ add_course_form.course_no }}
-    <br>
-    <label for="id_course_name">课程名称：</label>
-    {{ add_course_form.course_name }}
-    <br>
-    <label for="id_course_hours">课时数：</label>
-    {{ add_course_form.course_hours }}
-    <br>
-    <label for="id_type_id">课程类型：</label>
-    {{ add_course_form.type_id }}
-    <br>
-    <label for="id_course_status">课程状态：</label>
-    {{ add_course_form.course_status }}
-    <br>
-    <label for="id_course_reqs">要求：</label>
-    {{ add_course_form.course_reqs }}
-    <br>
-    <label for="id_course_point">学分：</label>
-    {{ add_course_form.course_point }}
-    <br>
-    <label for="id_course_memo">备注：</label>
-    {{ add_course_form.course_memo }}
-    <br>
-    <label for="id_course_textbook_pic">书本封面：</label>
-    {{ add_course_form.course_textbook_pic }}
-    <input type="file" name="course_textbook_pic">  {# 添加文件输入框 #}
-    <br>
-    <button type="submit">添加课程</button>
-  </form>
+</div>
+ </section>
 
+<section>
+  <div class="intro">
+    <h2>添加课程</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-row-container">
+        <div class="form-row">
+          <label for="id_course_no">课程编号：</label>
+          {{ add_course_form.course_no }}
+        </div>
+        <div class="form-row">
+          <label for="id_course_name">课程名称：</label>
+          {{ add_course_form.course_name }}
+        </div>
+        <div class="form-row">
+          <label for="id_course_hours">课时数：</label>
+          {{ add_course_form.course_hours }}
+        </div>
+        <div class="form-row">
+          <label for="id_type_id">课程类型：</label>
+          {{ add_course_form.type_id }}
+        </div>
+        <div class="form-row">
+          <label for="id_course_status">课程状态：</label>
+          {{ add_course_form.course_status }}
+        </div>
+        <div class="form-row">
+          <label for="id_course_reqs">要求：</label>
+          {{ add_course_form.course_reqs }}
+        </div>
+        <div class="form-row">
+          <label for="id_course_point">学分：</label>
+          {{ add_course_form.course_point }}
+        </div>
+        <div class="form-row">
+          <label for="id_course_memo">备注：</label>
+          {{ add_course_form.course_memo }}
+        </div>
+        <div class="form-row">
+          <label for="id_course_textbook_pic">书本封面：</label>
+          {{ add_course_form.course_textbook_pic }}
+          <input type="file" name="course_textbook_pic">  {# 添加文件输入框 #}
+        </div>
+      </div>
+      <br>
+      <button type="submit">添加课程</button>
+    </form>
+  </div>
+</section>
+
+<section>
+<div class="intro">
   <h2>删除课程</h2>
   <form method="post">
     {% csrf_token %}
     {{ delete_course_form.as_p }}
     <button type="submit">删除课程</button>
   </form>
+ </div>
+ </section>
 {% endblock %}
