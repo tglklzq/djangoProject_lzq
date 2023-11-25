@@ -3,12 +3,16 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-
+import base64
 from myapp.forms import UpdateProfileForm, DeleteCourseForm, AddCourseForm, SearchCourseTypeForm, AddCourseTypeForm, \
     CourseTypeForm, SearchForm, RegistrationForm
 from myapp.model import User, Course, CourseType, Registration
-
-
+import openpyxl
+from django.http import HttpResponse
+import io
+from openpyxl.drawing.image import Image as XLImage
+from django.shortcuts import get_object_or_404, render, redirect
+from .forms import EditCourseForm  # 请在这里导入你的编辑表单
 # 登录注册界面
 def login_view(request):
     error_message = None
@@ -67,7 +71,7 @@ def page_view(request, page_number):
     return render(request, template_name)
 
 
-# views.py
+
 def page5_view(request, user_number):
     user = User.objects.get(user_number=user_number)
     print("User Information:", user.user_name, user.user_number)  # 确保打印的用户信息正确
@@ -159,10 +163,7 @@ def page1_view(request):
                   {'courses': courses, 'add_course_form': add_course_form, 'delete_course_form': delete_course_form})
 
 
-import openpyxl
-from django.http import HttpResponse
-import io
-from openpyxl.drawing.image import Image as XLImage
+
 
 
 def export_to_excel(request):
@@ -197,8 +198,7 @@ def export_to_excel(request):
     return response
 
 
-from django.shortcuts import get_object_or_404, render, redirect
-from .forms import EditCourseForm  # 请在这里导入你的编辑表单
+
 
 
 def edit_course_view(request, course_no):
@@ -221,13 +221,7 @@ def delete_course_view(request, course_no):
     course.delete()
     return redirect('page1')
 
-
 # page1查询功能：
-# views.py
-
-import base64
-
-
 def search_courses_type(request):
     if 'search_query' in request.GET:
         search_query = request.GET['search_query']
